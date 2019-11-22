@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd
+	            http://www.springframework.org/schema/aop
+        	    http://www.springframework.org/schema/aop/spring-aop.xsd
+                http://www.springframework.org/schema/mvc
+        	    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--p-namespace 的使用: property 标签的简化-->
+
+<!--测试 多个配置文件中, bean 的 id 冲突问题: 结合 bean0.xml-->
+    <!--setter-based di-->
+    <bean id="user" class="org.anonymous.domain.User" scope="prototype" destroy-method="destroy"
+        p:name="杰克" p:age="10">
+        <!--注入属性:以区分 bean0.xml-->
+        <!--<property name="name" value="张三"/>-->
+        <!--<property name="age" value="10"/>-->
+    </bean>
+
+    <!--可以尝试把 p: 改成 c: 说明 构造方法的方式,无法实现 user 属性的赋值 -->
+    <bean id="animal00" class="org.anonymous.domain.Animal" scope="singleton" destroy-method="destroy"
+        p:user-ref="user">
+        <!--<property name="user" ref="user"/> &lt;!&ndash;setter-based di&ndash;&gt;-->
+    </bean>
+
+</beans>

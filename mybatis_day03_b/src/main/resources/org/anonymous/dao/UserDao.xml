@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--引入约束-->
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.anonymous.dao.UserDao">
+	<!--查不到账户信息: 必须使用 resultMap-->
+	<!--给 account 表的字段指定别名: 两张表都有 id 属性, mybatis 无法区分,必须使用映射+别名-->
+	<select id="findUser" resultMap="userMap">
+		select u.*, a.id aid, a.uid, a.money from user u left outer join account a on u.id = a.uid
+	</select>
+<!--用户与角色-->
+	<select id="findRole" resultMap="userMap">
+		SELECT u.*, r.id rid, r.`role_name`, r.`role_desc` FROM USER u LEFT OUTER JOIN user_role ur ON u.id = ur.`uid` LEFT JOIN role r ON r.`id` = ur.rid
+	</select>
+
+	<!--映射-->
+	<resultMap id="userMap" type="user">
+		<!--user 主键-->
+		<id property="id" column="id"/>
+		<!--user其他属性-->
+		<result property="username" column="username"/>
+		<result property="birthday" column="birthday"/>
+		<result property="sex" column="sex"/>
+		<result property="address" column="address"/>
+
+		<!--1.嵌套方式: 引入同 xml 中的 resultMap-->
+		<!--<collection property="" resultMap="另一个 resultMap 的 id"/>: 集合属性-->
+		<!--<association property="" resultMap=""/>: 对象属性-->
+
+		<!--2.内联方式: 直接在 一个 resultMap 内部定义 collection/association-->
+		<!--为user的 集合 属性映射 - collection 标签
+			property : 属性名(变量名)
+			javaType: 属性类型 - 全限定名/别名
+			ofType: 集合泛型 - 全限定名/别名
+		-->
+		<!--账户映射-->
+		<collection property="accounts" javaType="list" ofType="account">
+
+			<id property="id" column="aid"/>
+			<result property="uid" column="uid"/>
+			<result property="money" column="money"/>
+		</collection>
+		<!--角色映射-->
+		<collection property="roles" javaType="list" ofType="Role">
+			<id property="rid" column="rid"/>
+			<result property="roleName" column="role_name"/>
+			<result property="roleDesc" column="role_desc"/>
+		</collection>
+		<!--对象属性 映射-->
+		<!--<association property="" javaType=""/>-->
+	</resultMap>
+
+</mapper>

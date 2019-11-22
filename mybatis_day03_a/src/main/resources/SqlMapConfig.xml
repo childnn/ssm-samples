@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--引入约束-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+  <!--
+    properties 标签:
+      resource: 可以引入 外部 的 .properties 配置文件 (数据库连接信息)
+      使用:  ${jdbc文件内容的 key 值} 得到对应的 value 值
+  -->
+  <properties resource="jdbc.properties"/>
+
+  <!--
+    typeAliases: 给指定的 类全限定名 起别名 : sql 映射配置文件中对应的 类全限定名就可以写 别名了
+     子标签: typeAlias:
+        type: 类的全限定名
+        alias: 别名
+        子标签 typeAlias 可以写多个: 对应多个 Javabean
+        只能一个一个起别名
+
+     子标签:
+       package: 指定一个包
+        这个包下的 所有 类 都有别名: 就是类名(不区分大小写)
+  -->
+
+  <typeAliases>
+   <!-- <typeAlias type="org.anonymous.domain.Contact" alias="contact"/>
+    <typeAlias type="" alias=""/>-->
+
+    <package name="org.anonymous.domain"/>
+  </typeAliases>
+
+<!--环境配置-->
+   <environments default="development">   
+      <environment id="development">
+        <!--事务类型： jdbc-->
+        <transactionManager type="JDBC" />
+        <!--数据库连接池
+          type 属性值: mybatis-3.4.5.jar/org.apache.ibatis/datasource 下的三个包
+             pooled: 用 mybatis 自带连接池
+             unpooled: 不用 mybatis 自带连接池 - 可以使用 druid 等连接池
+             jndi: 需要在 tomcat 的 server.xml 配置文件中配置 jndi 服务器(并导入jar包,连接池)
+        -->
+        <dataSource type="POOLED">
+          <!--数据库连接信息-->
+          <property name="driver" value="${jdbc.driver}"/>
+          <property name="url" value="${jdbc.url}"/>
+          <property name="username" value="${jdbc.username}"/>
+          <property name="password" value="${jdbc.password}"/>
+        </dataSource>   
+     </environment>   
+  </environments>
+
+  <!--引入的 sql 映射配置文件
+    mappers:
+      子标签:
+          一: mapper
+              1.属性 resource : sql 映射配置文件路径
+              2.属性 class :
+                  使用条件:
+                    1. 配置文件 放在 resources 目录下的包里,包名必须和 dao 的接口 所在的 包名 一致
+                    2. 配置文件名必须和 dao 接口名一致
+          二: package 引入整个包下的配置文件
+              属性值: name 包名
+                满足与 class 相同的两个条件
+  -->
+  <mappers>
+    <!--<mapper resource="ContactMapper.xml"/>-->
+    <!--下面还可以加多个mapper 配置文件-->
+    <!--<mapper class=""/>-->
+
+    <!--针对整个包下的配置文件-->
+    <package name="org.anonymous.dao"/>
+  </mappers>
+
+</configuration>   

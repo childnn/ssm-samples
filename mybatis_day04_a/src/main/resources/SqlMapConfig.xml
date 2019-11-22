@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--引入约束-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+<!--jdbc 引入-->
+  <properties resource="jdbc.properties"/>
+
+ <!--全局环境配置: 延迟加载开关,默认是 false, 手动开启,设置为 true-->
+  <settings>
+    <!--所有关联对象的数据都会延迟加载-->
+    <setting name="lazyLoadingEnabled" value="true"/>
+    <!--使用 mybatis 的二级缓存: 可以省略, 默认就是开启的-->
+    <setting name="cacheEnabled" value="true"/>
+  </settings>
+
+<!--别名： 整个包下的类都可以用 类名表示-->
+  <typeAliases>
+    <package name="org.anonymous.domain"/>
+  </typeAliases>
+
+<!--环境配置-->
+   <environments default="development">   
+      <environment id="development">   
+        <transactionManager type="JDBC" />
+        <dataSource type="POOLED">
+          <!--数据库连接信息-->
+          <property name="driver" value="${jdbc.driver}"/>
+          <property name="url" value="${jdbc.url}"/>
+          <property name="username" value="${jdbc.username}"/>
+          <property name="password" value="${jdbc.password}"/>
+        </dataSource>   
+     </environment>   
+  </environments>
+
+<!--引入 sql 映射配置文件： 整个包-->
+  <mappers>
+    <package name="org.anonymous.dao"/>
+  </mappers>
+
+</configuration>   

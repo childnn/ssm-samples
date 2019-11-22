@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd
+	            http://www.springframework.org/schema/aop
+        	    http://www.springframework.org/schema/aop/spring-aop.xsd
+                http://www.springframework.org/schema/mvc
+        	    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--自动注入: 最好不要用-->
+    <bean id="animal" class="org.anonymous.domain.Animal" autowire="constructor" destroy-method="destroy"
+          depends-on="user"/>
+
+    <bean id="user" class="org.anonymous.domain.User" scope="prototype"
+        p:name="杰克" p:age="20"/>
+</beans>

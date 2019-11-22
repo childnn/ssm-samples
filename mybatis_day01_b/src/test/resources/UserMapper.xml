@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!--namespace:名称空间
+		区分模块
+	唯一：namespace.id
+	namespace: 当前接口的 全限定名
+	id: 接口调用方法的 方法名
+ -->  
+<mapper namespace="org.anonymous.dao.ContactDao">
+<!-- select 查询 -->   
+	<select id="findAll" resultType="org.anonymous.domain.Contact">
+		select * from contact
+	</select>    
+</mapper>   

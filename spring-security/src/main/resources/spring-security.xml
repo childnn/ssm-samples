@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd
+	            http://www.springframework.org/schema/aop
+        	    http://www.springframework.org/schema/aop/spring-aop.xsd
+                http://www.springframework.org/schema/mvc
+        	    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                http://www.springframework.org/schema/security
+        	    http://www.springframework.org/schema/security/spring-security.xsd">
+    <!--http: 拦截规则-->
+    <!--use-expressions: 是否启用 SPEL 表达式, 默认 true
+        auto-config: 是否使用 security 提供的登录界面, 默认 false; 等价于下面的 <form-login/> 标签
+    -->
+    <security:http use-expressions="false" auto-config="true">
+        <!--pattern: /** : 表示 拦截目录及目录下子目录的所有资源
+            access: 角色名称, 必须以 ROLE_ 作为前缀
+        -->
+        <security:intercept-url pattern="/**" access="ROLE_USER"/>
+        <!--开启表单登录功能: spring 自带的 表单： 等价于上面的配置： auto-config="true" -->
+        <!--<security:form-login/>-->
+    </security:http>
+
+    <!--认证管理器: 必须与 认证管理器中 用户名/密码 完全一致, 且具有对应的角色的用户才可登录成功-->
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <!--同一个认证管理器中: 用户名 name 属性必须唯一: password 前面添加的 {id} 是告诉 spring 该密码的加密方式-->
+                <security:user name="admin" password="{noop}admin" authorities="ROLE_USER"/>
+                <!--user 用户没有 "ROLE_USER" 角色, 登录失败-->
+                <security:user name="user" password="{noop}admin" authorities="ROLE_ADMIN"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+
+</beans>

@@ -1,0 +1,35 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!--配置 springMVC 提供的前端控制器: servlet-->
+  <servlet>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <!--springMVC 的配置文件地址-->
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:springMVC.xml</param-value>
+    </init-param>
+
+    <!--配置将第一次访问创建 servlet 变成 服务器已启动就创建
+      服务器启动:
+         1. DispatcherServlet 对象被创建出来
+         2. 加载 classpath 下的配置文件: springMVC.xml
+    -->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <!--
+      /* : 拦截所有
+      / : 拦截所有,不包含 jsp/html
+    -->
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+</web-app>
