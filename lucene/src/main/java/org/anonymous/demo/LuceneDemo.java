@@ -31,8 +31,8 @@ public class LuceneDemo {
 
     @Test
     public void test1() throws IOException {
-        Path path = Path.of("src\\main\\java\\org\\anonymous\\demo\\LuceneDemo.java");
-        String s = FileUtils.readFileToString(path.toFile(), "utf-8");
-        System.out.println(s);
+//        Path path = Path.of("src\\main\\java\\org\\anonymous\\demo\\LuceneDemo.java");
+//        String s = FileUtils.readFileToString(path.toFile(), "utf-8");
+//        System.out.println(s);
     }
 }
