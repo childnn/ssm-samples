@@ -36,7 +36,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.18</version>
+            <version>8.0.28</version>
         </dependency>
         <!--log4j: 日志: 可以指定将信息输出到的位置: 控制台/本地文件-->
         <dependency>
